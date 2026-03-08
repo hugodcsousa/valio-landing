@@ -4,252 +4,739 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Valio — Vale a pena?</title>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
     :root {
-      --navy: #0D1B2A;
-      --navy-mid: #1A2E42;
-      --teal: #2EC4B6;
-      --teal-dim: rgba(46, 196, 182, 0.12);
-      --amber: #F4A261;
-      --white: #F7F9FB;
-      --muted: rgba(247, 249, 251, 0.45);
+      --navy:   #0F2240;
+      --navy2:  #1B2D4F;
+      --navy3:  #243D66;
+      --teal:   #00C896;
+      --teal2:  #00A87D;
+      --amber:  #F5A623;
+      --white:  #FFFFFF;
+      --off:    #F7F9FC;
+      --gray1:  #EEF2F7;
+      --gray2:  #C8D4E3;
+      --gray3:  #8A9BB5;
     }
+
     html { scroll-behavior: smooth; }
+
     body {
       font-family: 'Plus Jakarta Sans', sans-serif;
-      background-color: var(--navy);
+      background: var(--navy);
       color: var(--white);
       min-height: 100vh;
       overflow-x: hidden;
     }
-    body::before {
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      padding: 80px 48px;
+      text-align: center;
+    }
+
+    /* Subtle grid */
+    .hero::before {
       content: '';
-      position: fixed;
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+    }
+
+    /* Radial glow */
+    .hero::after {
+      content: '';
+      position: absolute;
       inset: 0;
       background:
-        radial-gradient(ellipse 70% 50% at 80% 20%, rgba(46, 196, 182, 0.08) 0%, transparent 60%),
-        radial-gradient(ellipse 50% 60% at 10% 80%, rgba(244, 162, 97, 0.06) 0%, transparent 55%),
-        radial-gradient(ellipse 40% 40% at 50% 50%, rgba(26, 46, 66, 0.4) 0%, transparent 70%);
+        radial-gradient(ellipse 80% 60% at 20% 50%, rgba(0,200,150,0.07) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 80% at 80% 30%, rgba(245,166,35,0.05) 0%, transparent 60%);
       pointer-events: none;
-      z-index: 0;
     }
-    body::after {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
-      opacity: 0.4;
-      pointer-events: none;
-      z-index: 0;
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 780px;
     }
+
+    /* ── NAV ── */
     nav {
       position: fixed;
       top: 0; left: 0; right: 0;
       z-index: 100;
-      padding: 24px 48px;
+      padding: 20px 48px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(255,255,255,0.04);
+      background: rgba(15, 34, 64, 0.7);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
     }
-    .logo { font-size: 22px; font-weight: 800; letter-spacing: -0.5px; color: var(--white); }
-    .logo span { color: var(--teal); }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .nav-wordmark {
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: var(--white);
+    }
+
     .badge {
-      font-size: 11px; font-weight: 600; letter-spacing: 0.12em;
-      text-transform: uppercase; color: var(--teal);
-      background: var(--teal-dim); border: 1px solid rgba(46, 196, 182, 0.25);
-      padding: 6px 14px; border-radius: 100px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--teal);
+      background: rgba(0, 200, 150, 0.1);
+      border: 1px solid rgba(0, 200, 150, 0.25);
+      padding: 5px 12px;
+      border-radius: 100px;
     }
-    .hero {
-      position: relative; z-index: 1;
-      min-height: 100vh; display: flex; flex-direction: column;
-      justify-content: center; align-items: flex-start;
-      padding: 120px 48px 80px; max-width: 1100px; margin: 0 auto;
-    }
+
+    /* ── EYEBROW ── */
     .eyebrow {
-      font-size: 11px; font-weight: 700; letter-spacing: 0.18em;
-      text-transform: uppercase; color: var(--amber);
-      margin-bottom: 28px; opacity: 0;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 32px;
+      opacity: 0;
       animation: fadeUp 0.8s ease forwards 0.2s;
     }
+
+    /* ── LOGO MARK ── */
+    .logo-mark {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      margin-bottom: 32px;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 0.35s;
+    }
+
+    .logo-icon {
+      width: 64px;
+      height: 64px;
+    }
+
+    .wordmark {
+      font-size: 72px;
+      font-weight: 800;
+      color: var(--white);
+      letter-spacing: -3px;
+      line-height: 1;
+    }
+
+    /* ── TAGLINE ── */
+    .tagline {
+      font-family: 'DM Serif Display', serif;
+      font-size: 26px;
+      font-style: italic;
+      color: rgba(255,255,255,0.45);
+      margin-bottom: 24px;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 0.5s;
+    }
+
+    .tagline strong {
+      color: rgba(255,255,255,0.88);
+      font-style: normal;
+    }
+
+    /* ── HEADLINE ── */
     h1 {
-      font-size: clamp(48px, 7vw, 88px); font-weight: 800;
-      line-height: 1.02; letter-spacing: -2px;
-      margin-bottom: 32px; max-width: 780px;
-      opacity: 0; animation: fadeUp 0.9s ease forwards 0.4s;
+      font-size: clamp(36px, 5.5vw, 64px);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -1.5px;
+      margin-bottom: 24px;
+      opacity: 0;
+      animation: fadeUp 0.9s ease forwards 0.65s;
     }
-    h1 em { font-style: normal; color: var(--teal); }
-    h1 .accent-line { display: block; color: var(--muted); font-weight: 300; }
+
+    h1 em {
+      font-style: normal;
+      color: var(--teal);
+    }
+
+    /* ── SUBTITLE ── */
     .subtitle {
-      font-size: clamp(16px, 2vw, 20px); font-weight: 400;
-      line-height: 1.65; color: var(--muted);
-      max-width: 520px; margin-bottom: 56px;
-      opacity: 0; animation: fadeUp 0.9s ease forwards 0.6s;
+      font-size: clamp(15px, 1.8vw, 18px);
+      font-weight: 400;
+      line-height: 1.7;
+      color: rgba(255,255,255,0.5);
+      max-width: 520px;
+      margin: 0 auto 48px;
+      opacity: 0;
+      animation: fadeUp 0.9s ease forwards 0.8s;
     }
-    .subtitle strong { color: var(--white); font-weight: 600; }
+
+    .subtitle strong {
+      color: rgba(255,255,255,0.85);
+      font-weight: 600;
+    }
+
+    /* ── CTA PILLS ── */
     .cta-row {
-      display: flex; align-items: center; gap: 24px; flex-wrap: wrap;
-      opacity: 0; animation: fadeUp 0.9s ease forwards 0.8s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 0.9s ease forwards 0.95s;
     }
+
     .pill-soon {
-      display: flex; align-items: center; gap: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
       background: rgba(255,255,255,0.05);
       border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 100px; padding: 14px 28px;
-      font-size: 15px; font-weight: 500; color: var(--white);
+      border-radius: 100px;
+      padding: 13px 24px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--white);
       backdrop-filter: blur(8px);
     }
+
     .dot {
-      width: 8px; height: 8px; background: var(--teal);
-      border-radius: 50%; animation: pulse 2s ease infinite;
+      width: 7px; height: 7px;
+      background: var(--teal);
+      border-radius: 50%;
+      animation: pulse 2s ease infinite;
     }
-    .stores-row {
-      display: flex; align-items: center; gap: 8px;
-      font-size: 13px; color: var(--muted); font-weight: 500;
+
+    .pill-stores {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.4);
     }
-    .store-icon { width: 20px; height: 20px; opacity: 0.5; }
-    .divider {
-      position: relative; z-index: 1;
-      max-width: 1100px; margin: 0 auto; padding: 0 48px 80px;
-      opacity: 0; animation: fadeUp 1s ease forwards 1s;
+
+    .store-icon { width: 18px; height: 18px; opacity: 0.45; }
+
+    /* ── SCROLL HINT ── */
+    .scroll-hint {
+      position: absolute;
+      bottom: 36px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      opacity: 0;
+      animation: fadeIn 1s ease forwards 1.6s;
     }
-    .divider-line {
-      height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(46,196,182,0.3), transparent);
+
+    .scroll-hint span {
+      font-size: 9px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.25);
+    }
+
+    .scroll-line {
+      width: 1px;
+      height: 36px;
+      background: linear-gradient(to bottom, rgba(0,200,150,0.5), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+
+    /* ── PILLARS SECTION ── */
+    .pillars {
+      background: var(--off);
+      padding: 100px 48px;
+    }
+
+    .pillars-inner {
+      max-width: 1080px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--gray3);
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-size: clamp(28px, 3.5vw, 42px);
+      font-weight: 800;
+      color: var(--navy);
+      letter-spacing: -1px;
+      line-height: 1.1;
+      margin-bottom: 8px;
+    }
+
+    .section-sub {
+      font-size: 16px;
+      color: var(--gray3);
+      max-width: 480px;
+      line-height: 1.65;
       margin-bottom: 64px;
     }
-    .props { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
-    .prop {
-      padding: 36px 32px;
-      background: rgba(255,255,255,0.02);
-      border: 1px solid rgba(255,255,255,0.05);
-      transition: background 0.3s ease, border-color 0.3s ease;
+
+    .props-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
     }
-    .prop:first-child { border-radius: 16px 0 0 16px; }
-    .prop:last-child { border-radius: 0 16px 16px 0; }
-    .prop:hover { background: rgba(46, 196, 182, 0.05); border-color: rgba(46, 196, 182, 0.15); }
-    .prop-icon { font-size: 28px; margin-bottom: 16px; display: block; }
-    .prop-title { font-size: 15px; font-weight: 700; color: var(--white); margin-bottom: 8px; letter-spacing: -0.2px; }
-    .prop-desc { font-size: 13px; line-height: 1.6; color: var(--muted); font-weight: 400; }
-    .question-section {
-      position: relative; z-index: 1;
-      max-width: 1100px; margin: 0 auto;
-      padding: 0 48px 120px; text-align: center;
+
+    .prop-card {
+      background: var(--white);
+      border-radius: 20px;
+      padding: 36px 28px;
+      border: 1px solid var(--gray1);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
     }
-    .question-section h2 {
-      font-size: clamp(36px, 5vw, 64px); font-weight: 800;
-      letter-spacing: -1.5px; line-height: 1.08; margin-bottom: 20px;
+
+    .prop-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 40px rgba(15,34,64,0.1);
     }
-    .question-section h2 span { color: var(--teal); }
-    .question-section p {
-      font-size: 17px; color: var(--muted);
-      max-width: 480px; margin: 0 auto; line-height: 1.65;
+
+    .prop-icon-wrap {
+      width: 48px; height: 48px;
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px;
+      margin-bottom: 20px;
     }
+
+    .prop-icon-wrap.teal { background: rgba(0,200,150,0.1); }
+    .prop-icon-wrap.amber { background: rgba(245,166,35,0.1); }
+    .prop-icon-wrap.navy { background: rgba(15,34,64,0.07); }
+
+    .prop-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 8px;
+      letter-spacing: -0.2px;
+    }
+
+    .prop-desc {
+      font-size: 14px;
+      line-height: 1.65;
+      color: var(--gray3);
+    }
+
+    /* ── VOICE SECTION ── */
+    .voice {
+      background: var(--navy2);
+      padding: 100px 48px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .voice::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+
+    .voice-inner {
+      max-width: 1080px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .voice .section-title { color: var(--white); }
+    .voice .section-label { color: rgba(255,255,255,0.3); }
+    .voice .section-sub { color: rgba(255,255,255,0.45); }
+
+    .voice-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .voice-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      padding: 28px;
+    }
+
+    .voice-card.right {
+      border-color: rgba(0,200,150,0.2);
+      background: rgba(0,200,150,0.04);
+    }
+
+    .voice-type {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    .voice-type.wrong { color: rgba(255,255,255,0.35); }
+    .voice-type.right { color: var(--teal); }
+
+    .voice-dot {
+      width: 20px; height: 20px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 10px;
+      font-weight: 800;
+    }
+
+    .voice-dot.x { background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.4); }
+    .voice-dot.check { background: rgba(0,200,150,0.15); color: var(--teal); }
+
+    .voice-quote {
+      font-family: 'DM Serif Display', serif;
+      font-size: 17px;
+      font-style: italic;
+      line-height: 1.5;
+      margin-bottom: 12px;
+      color: rgba(255,255,255,0.7);
+    }
+
+    .voice-card.right .voice-quote { color: rgba(255,255,255,0.9); }
+
+    .voice-reason {
+      font-size: 12px;
+      line-height: 1.6;
+      color: rgba(255,255,255,0.35);
+    }
+
+    /* ── CLOSING SECTION ── */
+    .closing {
+      background: var(--navy);
+      padding: 120px 48px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .closing::before {
+      content: '';
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(0,200,150,0.06) 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    .closing-inner {
+      position: relative;
+      z-index: 1;
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    .closing h2 {
+      font-size: clamp(32px, 4.5vw, 56px);
+      font-weight: 800;
+      letter-spacing: -1.5px;
+      line-height: 1.08;
+      margin-bottom: 20px;
+    }
+
+    .closing h2 span { color: var(--teal); }
+
+    .closing-tagline {
+      font-family: 'DM Serif Display', serif;
+      font-size: 20px;
+      font-style: italic;
+      color: rgba(255,255,255,0.4);
+      margin-bottom: 16px;
+    }
+
+    .closing p {
+      font-size: 16px;
+      color: rgba(255,255,255,0.45);
+      line-height: 1.7;
+    }
+
+    /* ── FOOTER ── */
     footer {
-      position: relative; z-index: 1;
-      border-top: 1px solid rgba(255,255,255,0.05);
-      padding: 32px 48px; max-width: 1100px; margin: 0 auto;
-      display: flex; justify-content: space-between; align-items: center;
+      background: var(--navy);
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding: 36px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 100%;
     }
-    footer .logo { font-size: 16px; }
-    footer p { font-size: 12px; color: var(--muted); font-weight: 400; }
+
+    .footer-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .footer-wordmark {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--white);
+      letter-spacing: -0.5px;
+    }
+
+    footer p {
+      font-size: 12px;
+      color: rgba(255,255,255,0.25);
+    }
+
+    /* ── ANIMATIONS ── */
     @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(24px); }
+      from { opacity: 0; transform: translateY(22px); }
       to   { opacity: 1; transform: translateY(0); }
     }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
     @keyframes pulse {
       0%, 100% { opacity: 1; transform: scale(1); }
-      50%       { opacity: 0.5; transform: scale(0.8); }
+      50%       { opacity: 0.4; transform: scale(0.75); }
     }
-    .orb {
-      position: fixed; top: 15%; right: -100px;
-      width: 500px; height: 500px;
-      background: radial-gradient(circle, rgba(46, 196, 182, 0.06) 0%, transparent 70%);
-      border-radius: 50%; pointer-events: none; z-index: 0;
-      animation: drift 12s ease-in-out infinite;
+
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.6; transform: scaleY(1); }
+      50%       { opacity: 0.15; transform: scaleY(0.6); }
     }
-    .orb-2 {
-      position: fixed; bottom: 10%; left: -80px;
-      width: 400px; height: 400px;
-      background: radial-gradient(circle, rgba(244, 162, 97, 0.05) 0%, transparent 70%);
-      border-radius: 50%; pointer-events: none; z-index: 0;
-      animation: drift 16s ease-in-out infinite reverse;
+
+    /* Reveal on scroll */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
     }
-    @keyframes drift {
-      0%, 100% { transform: translateY(0px) scale(1); }
-      50%       { transform: translateY(-40px) scale(1.05); }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
     }
+
+    /* ── RESPONSIVE ── */
     @media (max-width: 768px) {
-      nav { padding: 20px 24px; }
-      .hero { padding: 100px 24px 60px; }
-      .divider { padding: 0 24px 60px; }
-      .props { grid-template-columns: 1fr; gap: 2px; }
-      .prop:first-child { border-radius: 16px 16px 0 0; }
-      .prop:last-child  { border-radius: 0 0 16px 16px; }
-      .question-section { padding: 0 24px 80px; }
+      nav { padding: 16px 24px; }
+      .hero { padding: 80px 24px 60px; }
+      .wordmark { font-size: 52px; }
+      .logo-icon { width: 48px; height: 48px; }
+      .pillars { padding: 72px 24px; }
+      .props-grid { grid-template-columns: 1fr; gap: 16px; }
+      .voice { padding: 72px 24px; }
+      .voice-cards { grid-template-columns: 1fr; }
+      .closing { padding: 80px 24px; }
       footer { padding: 28px 24px; flex-direction: column; gap: 12px; text-align: center; }
     }
   </style>
 </head>
 <body>
-  <div class="orb"></div>
-  <div class="orb-2"></div>
+
+  <!-- Nav -->
   <nav>
-    <div class="logo">val<span>io</span></div>
+    <div class="nav-logo">
+      <svg width="28" height="28" viewBox="0 0 72 72" fill="none">
+        <line x1="12" y1="16" x2="32" y2="54" stroke="#00C896" stroke-width="7" stroke-linecap="round"/>
+        <line x1="32" y1="54" x2="60" y2="16" stroke="white" stroke-width="4" stroke-linecap="round"/>
+        <circle cx="32" cy="54" r="4" fill="#F5A623"/>
+      </svg>
+      <span class="nav-wordmark">Valio</span>
+    </div>
     <div class="badge">Em breve</div>
   </nav>
+
+  <!-- Hero -->
   <section class="hero">
-    <p class="eyebrow">Literacia financeira no momento certo</p>
-    <h1>
-      Vale mesmo<br>
-      <em>a pena?</em>
-      <span class="accent-line">Agora tens a resposta.</span>
-    </h1>
-    <p class="subtitle">
-      Antes de qualquer compra, a Valio ajuda-te a perceber o seu <strong>verdadeiro custo</strong> — não no papel, mas no teu dia a dia real.
-    </p>
-    <div class="cta-row">
-      <div class="pill-soon">
-        <span class="dot"></span>
-        A ser desenvolvida
+    <div class="hero-content">
+
+      <p class="eyebrow">Literacia financeira no momento certo</p>
+
+      <div class="logo-mark">
+        <svg class="logo-icon" viewBox="0 0 72 72" fill="none">
+          <line x1="12" y1="16" x2="32" y2="54" stroke="#00C896" stroke-width="7" stroke-linecap="round"/>
+          <line x1="32" y1="54" x2="60" y2="16" stroke="white" stroke-width="4" stroke-linecap="round"/>
+          <circle cx="32" cy="54" r="4" fill="#F5A623"/>
+        </svg>
+        <span class="wordmark">Valio</span>
       </div>
-      <div class="stores-row">
-        <svg class="store-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
-        <svg class="store-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M3.18 23.76c.3.17.65.19.97.06l12.14-6.97-2.7-2.78-10.41 9.69zM.44 2.13C.17 2.4 0 2.83 0 3.4v17.2c0 .57.17 1 .44 1.27l.07.06 9.63-9.63v-.23L.51 2.07l-.07.06zM21.79 10.37l-2.77-1.59-3.05 3.05 3.05 3.04 2.78-1.6c.79-.45.79-1.19 0-1.9zM3.18.24L15.32 7.2l-2.7 2.7L2.21.22c.32-.14.68-.12.97.02z"/></svg>
-        iOS & Android
+
+      <p class="tagline">A pergunta que <strong>muda tudo.</strong></p>
+
+      <h1>
+        Vale mesmo<br>
+        <em>a pena?</em>
+      </h1>
+
+      <p class="subtitle">
+        Antes de qualquer compra, a Valio mostra o seu <strong>verdadeiro peso</strong> no teu dia a dia real — não no salário bruto, mas no que sobra de verdade.
+      </p>
+
+      <div class="cta-row">
+        <div class="pill-soon">
+          <span class="dot"></span>
+          A ser desenvolvida
+        </div>
+        <div class="pill-stores">
+          <svg class="store-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+          <svg class="store-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M3.18 23.76c.3.17.65.19.97.06l12.14-6.97-2.7-2.78-10.41 9.69zM.44 2.13C.17 2.4 0 2.83 0 3.4v17.2c0 .57.17 1 .44 1.27l.07.06 9.63-9.63v-.23L.51 2.07l-.07.06zM21.79 10.37l-2.77-1.59-3.05 3.05 3.05 3.04 2.78-1.6c.79-.45.79-1.19 0-1.9zM3.18.24L15.32 7.2l-2.7 2.7L2.21.22c.32-.14.68-.12.97.02z"/></svg>
+          iOS & Android
+        </div>
+      </div>
+
+    </div>
+
+    <div class="scroll-hint">
+      <span>Saber mais</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- Pillars -->
+  <section class="pillars">
+    <div class="pillars-inner">
+      <div class="reveal">
+        <p class="section-label">O que é a Valio</p>
+        <h2 class="section-title">O teu dinheiro real.<br>As tuas decisões reais.</h2>
+        <p class="section-sub">Não um orçamento. Não uma folha de cálculo. Uma resposta clara, no momento em que precisas dela.</p>
+      </div>
+
+      <div class="props-grid reveal">
+        <div class="prop-card">
+          <div class="prop-icon-wrap teal">💡</div>
+          <div class="prop-title">O excedente real</div>
+          <p class="prop-desc">Não o salário bruto. O que sobra de verdade depois de todas as despesas fixas e variáveis — o teu ponto de partida honesto.</p>
+        </div>
+        <div class="prop-card">
+          <div class="prop-icon-wrap amber">⚡</div>
+          <div class="prop-title">Decisão no momento</div>
+          <p class="prop-desc">Antes de comprar, sabes exatamente o peso daquela decisão. Não depois. Não com remorsos. No instante certo.</p>
+        </div>
+        <div class="prop-card">
+          <div class="prop-icon-wrap navy">🎯</div>
+          <div class="prop-title">Alinhado aos teus objetivos</div>
+          <p class="prop-desc">Cada compra é avaliada à luz do que queres alcançar. Em dias de trabalho, não em euros abstratos.</p>
+        </div>
       </div>
     </div>
   </section>
-  <div class="divider">
-    <div class="divider-line"></div>
-    <div class="props">
-      <div class="prop">
-        <span class="prop-icon">💡</span>
-        <div class="prop-title">O teu dinheiro real</div>
-        <p class="prop-desc">Não o salário bruto. O que sobra de verdade depois de todas as despesas fixas e variáveis.</p>
+
+  <!-- Voice / Philosophy -->
+  <section class="voice">
+    <div class="voice-inner">
+      <div class="reveal">
+        <p class="section-label">Filosofia</p>
+        <h2 class="section-title">Espelho, não Juiz.</h2>
+        <p class="section-sub">A Valio nunca te diz o que fazer. Mostra os factos — a decisão é sempre tua.</p>
       </div>
-      <div class="prop">
-        <span class="prop-icon">⚡</span>
-        <div class="prop-title">Decisão no momento</div>
-        <p class="prop-desc">Antes de comprar, sabes exatamente o peso daquela decisão no teu equilíbrio financeiro.</p>
-      </div>
-      <div class="prop">
-        <span class="prop-icon">🎯</span>
-        <div class="prop-title">Com os teus objetivos</div>
-        <p class="prop-desc">Cada compra é avaliada à luz do que realmente queres alcançar. Não em abstrato — em dias de trabalho.</p>
+
+      <div class="voice-cards reveal">
+        <div class="voice-card">
+          <div class="voice-type wrong">
+            <div class="voice-dot x">✕</div>
+            Nunca
+          </div>
+          <p class="voice-quote">«Não tens margem para isto. Não deves comprar.»</p>
+          <p class="voice-reason">Julgamento implícito. A ferramenta não é autoridade sobre a tua vida.</p>
+        </div>
+        <div class="voice-card right">
+          <div class="voice-type right">
+            <div class="voice-dot check">✓</div>
+            Sempre
+          </div>
+          <p class="voice-quote">«Isto usa 80% do teu excedente de outubro. A decisão é tua.»</p>
+          <p class="voice-reason">Facto neutro. Devolução da decisão. Empoderador, não restritivo.</p>
+        </div>
+        <div class="voice-card">
+          <div class="voice-type wrong">
+            <div class="voice-dot x">✕</div>
+            Nunca
+          </div>
+          <p class="voice-quote">«Demoras 3 meses a juntar dinheiro para isto.»</p>
+          <p class="voice-reason">Framing de escassez. Cria ansiedade sem oferecer caminho.</p>
+        </div>
+        <div class="voice-card right">
+          <div class="voice-type right">
+            <div class="voice-dot check">✓</div>
+            Sempre
+          </div>
+          <p class="voice-quote">«Com o teu ritmo atual, tens isto em dezembro.»</p>
+          <p class="voice-reason">Framing de progresso. Otimista, concreto, acionável.</p>
+        </div>
       </div>
     </div>
-  </div>
-  <section class="question-section">
-    <h2>A pergunta que<br><span>toda a gente evita.</span></h2>
-    <p>A Valio foi construída para te ajudar a responder honestamente — sem julgamentos, sem complexidade, sem desculpas.</p>
   </section>
+
+  <!-- Closing -->
+  <section class="closing">
+    <div class="closing-inner reveal">
+      <h2>A pergunta que<br><span>toda a gente evita.</span></h2>
+      <p class="closing-tagline">«Vale a pena?»</p>
+      <p>A Valio foi construída para te ajudar a responder com honestidade — sem julgamentos, sem complexidade, sem desculpas.</p>
+    </div>
+  </section>
+
+  <!-- Footer -->
   <footer>
-    <div class="logo">val<span style="color:var(--teal)">io</span></div>
-    <p>© 2025 Valio · getvalio.app</p>
+    <div class="footer-logo">
+      <svg width="24" height="24" viewBox="0 0 72 72" fill="none">
+        <line x1="12" y1="16" x2="32" y2="54" stroke="#00C896" stroke-width="7" stroke-linecap="round"/>
+        <line x1="32" y1="54" x2="60" y2="16" stroke="white" stroke-width="4" stroke-linecap="round"/>
+        <circle cx="32" cy="54" r="4" fill="#F5A623"/>
+      </svg>
+      <span class="footer-wordmark">Valio</span>
+    </div>
+    <p>© 2026 Valio · getvalio.app</p>
   </footer>
+
+  <script>
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          entry.target.style.transitionDelay = `${i * 0.08}s`;
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.12 });
+    reveals.forEach(el => observer.observe(el));
+  </script>
+
 </body>
 </html>
